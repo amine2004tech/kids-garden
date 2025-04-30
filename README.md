@@ -4,23 +4,37 @@ A comprehensive educational platform backend designed specifically for children'
 
 ## 🚀 Features
 
-- Interactive Learning Modules
-  - Age-appropriate content delivery
+- Interactive Learning Games
+  - Letter recognition and pronunciation games
+  - Number counting and matching games
+  - Color identification and matching activities
+  - Interactive lessons with difficulty levels (1-5)
   - Progress tracking and achievements
-  - Parent/Teacher dashboard integration
-  - Learning path customization
 
-- Educational Content Management
-  - Course and lesson management
-  - Multimedia content support
-  - Assessment and quiz system
-  - Learning analytics
+- Admin Dashboard & Content Management
+  - Comprehensive admin dashboard
+  - User management and role assignment
+  - Content moderation tools
+  - Media file management (voice recordings)
+  - Lesson creation and editing
+  - Content categorization system
+  - Analytics and user tracking
 
-- User Management
-  - Student profiles and progress tracking
-  - Parent/Teacher accounts
+- User Authentication & Management
+  - Secure user registration
+  - Email verification system
+  - Password reset functionality
   - Role-based access control
-  - Secure authentication
+  - User profile management
+  - Session management
+
+- Educational Content
+  - Voice-based learning for letters
+  - Number recognition with star ratings
+  - Color learning with visual aids
+  - Interactive lessons
+  - Progress tracking system
+  - Category-based content organization
 
 - Technical Features
   - Laravel 12.x backend framework
