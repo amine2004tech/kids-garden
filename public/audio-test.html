@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Direct Audio Test</title>
+    <style>
+        button { padding: 10px; margin: 5px; }
+    </style>
+</head>
+<body>
+    <h1>Direct Audio Test</h1>
+    
+    <div>
+        <h2>Test with Audio Element:</h2>
+        <audio id="audioPlayer" controls>
+            <source src="/audio/a.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+    </div>
+
+    <div>
+        <h2>Test with Buttons:</h2>
+        <button onclick="playSound('a')">Play A</button>
+        <button onclick="playSound('b')">Play B</button>
+        <button onclick="playSound('c')">Play C</button>
+    </div>
+
+    <div id="status"></div>
+
+    <script>
+        function playSound(letter) {
+            const status = document.getElementById('status');
+            const audio = new Audio(`/audio/${letter}.mp3`);
+            
+            status.textContent = `Trying to play ${letter}.mp3...`;
+            
+            audio.oncanplaythrough = () => {
+                status.textContent = `${letter}.mp3 loaded successfully, playing...`;
+            };
+            
+            audio.onerror = (e) => {
+                status.textContent = `Error loading ${letter}.mp3: ${e.target.error}`;
+            };
+            
+            audio.play().then(() => {
+                status.textContent = `Playing ${letter}.mp3`;
+            }).catch(error => {
+                status.textContent = `Error playing ${letter}.mp3: ${error}`;
+            });
+        }
+    </script>
+</body>
+</html> 

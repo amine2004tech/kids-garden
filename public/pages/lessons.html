@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>Kids Learning Fun - Lessons</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap');
+        
+        body {
+            font-family: 'Comic Neue', cursive;
+            background-color: #f9f7fe;
+            transition: all 0.3s ease;  
+        }
+        
+        .alphabet-card {
+            transition: all 0.3s ease;
+        }
+        
+        .alphabet-card:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- Header/Navigation -->
+    <header class="bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 py-4 shadow-lg">
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            <div class="flex items-center">
+                <i class="fas fa-book-open text-white text-3xl mr-3"></i>
+                <h1 class="text-white text-2xl font-bold">Kids Learning Fun</h1>
+            </div>
+            <nav>
+                <ul class="flex space-x-6" id="navLinks">
+                    <li><a href="/" class="nav-btn text-white hover:text-yellow-200 font-bold text-lg">Home</a></li>
+                    <li><a href="/lessons" class="nav-btn text-white hover:text-yellow-200 font-bold text-lg">Lessons</a></li>
+                    <li><a href="/games" class="nav-btn text-white hover:text-yellow-200 font-bold text-lg">Games</a></li>
+                    <li><a href="/login" class="nav-btn text-white hover:text-yellow-200 font-bold text-lg">Login</a></li>
+                    <li><a href="/register" class="nav-btn text-white hover:text-yellow-200 font-bold text-lg">Register</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Lessons Page Content -->
+    <section class="container mx-auto px-4 py-8">
+        <div class="flex justify-between items-center mb-8">
+            <h2 class="text-3xl font-bold text-purple-800">Fun Learning Lessons</h2>
+            <a href="/" class="flex items-center text-purple-600 hover:text-purple-800">
+                <i class="fas fa-home mr-2"></i> Back to Home
+            </a>
+        </div>
+        
+        <div class="mb-8">
+            <h3 class="text-2xl font-bold text-pink-600 mb-4">Alphabet Adventure</h3>
+            <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-4">
+                <!-- Generate alphabet cards -->
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        const alphabetContainer = document.getElementById('alphabet-container');
+                        const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+                        
+                        alphabet.forEach(letter => {
+                            const card = document.createElement('div');
+                            card.className = 'alphabet-card bg-white rounded-xl p-4 shadow-md flex flex-col items-center cursor-pointer hover:shadow-lg';
+                            card.dataset.letter = letter;
+                            card.onclick = function() { playLetterSound(this.dataset.letter); };
+                            card.innerHTML = `
+                                <div class="w-16 h-16 rounded-full bg-purple-100 flex items-center justify-center mb-2">
+                                    <span class="text-3xl font-bold text-purple-800">${letter}</span>
+                                </div>
+                                <span class="text-sm font-medium text-gray-600">${getAnimalForLetter(letter)}</span>
+                            `;
+                            alphabetContainer.appendChild(card);
+                        });
+                        
+                        function getAnimalForLetter(letter) {
+                            const animals = {
+                                'A': 'Alligator', 'B': 'Bear', 'C': 'Cat', 'D': 'Dog', 
+                                'E': 'Elephant', 'F': 'Fox', 'G': 'Giraffe', 'H': 'Horse',
+                                'I': 'Iguana', 'J': 'Jaguar', 'K': 'Koala', 'L': 'Lion',
+                                'M': 'Monkey', 'N': 'Narwhal', 'O': 'Owl', 'P': 'Penguin',
+                                'Q': 'Quail', 'R': 'Rabbit', 'S': 'Snake', 'T': 'Tiger',
+                                'U': 'Unicorn', 'V': 'Vulture', 'W': 'Whale', 'X': 'X-ray Fish',
+                                'Y': 'Yak', 'Z': 'Zebra'
+                            };
+                            return animals[letter] || '';
+                        }
+                    });
+                </script>
+                <div id="alphabet-container" class="col-span-full grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-4"></div>
+            </div>
+        </div>
+        
+        <div class="mb-8">
+            <h3 class="text-2xl font-bold text-blue-600 mb-4">Number Explorers</h3>
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-10 gap-4">
+                <!-- Generate number cards -->
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        const numbersContainer = document.getElementById('numbers-container');
+                        
+                        for (let i = 1; i <= 20; i++) {
+                            const card = document.createElement('div');
+                            card.className = 'alphabet-card bg-white rounded-xl p-4 shadow-md flex flex-col items-center cursor-pointer hover:shadow-lg';
+                            card.innerHTML = `
+                                <div class="w-16 h-16 rounded-full bg-blue-100 flex items-center justify-center mb-2">
+                                    <span class="text-3xl font-bold text-blue-800">${i}</span>
+                                </div>
+                                <div class="flex space-x-1">
+                                    ${Array(i).fill('<i class="fas fa-star text-yellow-400 text-xs"></i>').join('')}
+                                </div>
+                            `;
+                            numbersContainer.appendChild(card);
+                        }
+                    });
+                </script>
+                <div id="numbers-container" class="col-span-full grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-10 gap-4"></div>
+            </div>
+        </div>
+        
+        <div>
+            <h3 class="text-2xl font-bold text-green-600 mb-4">Color World</h3>
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                <!-- Color cards -->
+                <div class="color-card bg-red-500 rounded-xl p-4 shadow-md flex flex-col items-center cursor-pointer hover:shadow-lg">
+                    <div class="w-16 h-16 rounded-full bg-white flex items-center justify-center mb-2">
+                        <i class="fas fa-apple-alt text-red-500 text-3xl"></i>
+                    </div>
+                    <span class="text-sm font-medium text-white color-name">Red</span>
+                </div>
+                <div class="color-card bg-blue-500 rounded-xl p-4 shadow-md flex flex-col items-center cursor-pointer hover:shadow-lg">
+                    <div class="w-16 h-16 rounded-full bg-white flex items-center justify-center mb-2">
+                        <i class="fas fa-water text-blue-500 text-3xl"></i>
+                    </div>
+                    <span class="text-sm font-medium text-white color-name">Blue</span>
+                </div>
+                <div class="color-card bg-yellow-400 rounded-xl p-4 shadow-md flex flex-col items-center cursor-pointer hover:shadow-lg">
+                    <div class="w-16 h-16 rounded-full bg-white flex items-center justify-center mb-2">
+                        <i class="fas fa-sun text-yellow-400 text-3xl"></i>
+                    </div>
+                    <span class="text-sm font-medium text-gray-800 color-name">Yellow</span>
+                </div>
+                <div class="color-card bg-green-500 rounded-xl p-4 shadow-md flex flex-col items-center cursor-pointer hover:shadow-lg">
+                    <div class="w-16 h-16 rounded-full bg-white flex items-center justify-center mb-2">
+                        <i class="fas fa-leaf text-green-500 text-3xl"></i>
+                    </div>
+                    <span class="text-sm font-medium text-white color-name">Green</span>
+                </div>
+                <div class="color-card bg-purple-500 rounded-xl p-4 shadow-md flex flex-col items-center cursor-pointer hover:shadow-lg">
+                    <div class="w-16 h-16 rounded-full bg-white flex items-center justify-center mb-2">
+                        <i class="fas fa-grapes text-purple-500 text-3xl"></i>
+                    </div>
+                    <span class="text-sm font-medium text-white color-name">Purple</span>
+                </div>
+                <div class="color-card bg-pink-400 rounded-xl p-4 shadow-md flex flex-col items-center cursor-pointer hover:shadow-lg">
+                    <div class="w-16 h-16 rounded-full bg-white flex items-center justify-center mb-2">
+                        <i class="fas fa-heart text-pink-400 text-3xl"></i>
+                    </div>
+                    <span class="text-sm font-medium text-white color-name">Pink</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-purple-800 text-white py-8 mt-12">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <h3 class="text-xl font-bold mb-2">Kids Learning Fun</h3>
+                    <p class="text-purple-200">Making learning fun since 2023</p>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-white hover:text-yellow-300 text-xl"><i class="fab fa-facebook"></i></a>
+                    <a href="#" class="text-white hover:text-yellow-300 text-xl"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="text-white hover:text-yellow-300 text-xl"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="border-t border-purple-700 mt-6 pt-6 text-center text-purple-200">
+                <p>&copy; 2023 Kids Learning Fun. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/audio.js"></script>
+    <script>
+        let csrfToken = '';
+
+        // Get CSRF token
+        fetch('/api/csrf-token')
+            .then(response => response.json())
+            .then(data => {
+                csrfToken = data.token;
+            });
+
+        // Check if user is authenticated
+        fetch('/api/check-auth')
+            .then(response => response.json())
+            .then(data => {
+                if (data.authenticated) {
+                    // Update navigation links
+                    document.getElementById('navLinks').innerHTML = `
+                        <li><a href="/" class="nav-btn text-white hover:text-yellow-200 font-bold text-lg">Home</a></li>
+                        <li><a href="/lessons" class="nav-btn text-white hover:text-yellow-200 font-bold text-lg">Lessons</a></li>
+                        <li><a href="/games" class="nav-btn text-white hover:text-yellow-200 font-bold text-lg">Games</a></li>
+                        <li><a href="/dashboard" class="nav-btn text-white hover:text-yellow-200 font-bold text-lg">Dashboard</a></li>
+                        ${data.is_admin ? '<li><a href="/ggezzz" class="nav-btn text-white hover:text-yellow-200 font-bold text-lg">Manage Content</a></li>' : ''}
+                        <li>
+                            <form id="logout-form" action="/logout" method="POST" class="inline">
+                                <input type="hidden" name="_token" value="${csrfToken}">
+                                <button type="submit" class="nav-btn text-white hover:text-yellow-200 font-bold text-lg">Logout</button>
+                            </form>
+                        </li>
+                    `;
+                }
+            })
+            .catch(error => console.error('Error checking auth status:', error));
+    </script>
+</body>
+</html> 

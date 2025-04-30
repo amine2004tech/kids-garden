@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kids Learning Fun - Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap');
+        
+        body {
+            font-family: 'Comic Neue', cursive;
+            background-color: #f9f7fe;
+            transition: all 0.3s ease;  
+        }
+        
+        .btn-primary {
+            background: linear-gradient(45deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .btn-primary:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .form-input {
+            border: 2px solid #e2e8f0;
+            border-radius: 0.5rem;
+            padding: 0.75rem 1rem;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            border-color: #a78bfa;
+            box-shadow: 0 0 0 3px rgba(167, 139, 250, 0.2);
+            outline: none;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- Header/Navigation -->
+    <header class="bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 py-4 shadow-lg">
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            <div class="flex items-center">
+                <i class="fas fa-book-open text-white text-3xl mr-3"></i>
+                <h1 class="text-white text-2xl font-bold">Kids Learning Fun</h1>
+            </div>
+            <nav>
+                <ul class="flex space-x-6" id="navLinks">
+                    <li><a href="/" class="nav-btn text-white hover:text-yellow-200 font-bold text-lg">Home</a></li>
+                    <li><a href="/lessons" class="nav-btn text-white hover:text-yellow-200 font-bold text-lg">Lessons</a></li>
+                    <li><a href="/games" class="nav-btn text-white hover:text-yellow-200 font-bold text-lg">Games</a></li>
+                    <li><a href="/login" class="nav-btn text-white hover:text-yellow-200 font-bold text-lg">Login</a></li>
+                    <li><a href="/register" class="nav-btn text-white hover:text-yellow-200 font-bold text-lg">Register</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Login Form -->
+    <section class="container mx-auto px-4 py-8">
+        <div class="max-w-md mx-auto bg-white rounded-2xl shadow-xl p-8">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold text-purple-800 mb-2">Welcome Back!</h2>
+                <p class="text-gray-600">Login to continue your learning journey</p>
+            </div>
+
+            <form method="POST" action="/login">
+                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                
+                <div class="mb-6">
+                    <label for="email" class="block text-gray-700 font-bold mb-2">Email Address</label>
+                    <input type="email" id="email" name="email" class="form-input" required autofocus>
+                </div>
+
+                <div class="mb-6">
+                    <label for="password" class="block text-gray-700 font-bold mb-2">Password</label>
+                    <input type="password" id="password" name="password" class="form-input" required>
+                </div>
+
+                <div class="flex items-center justify-between mb-6">
+                    <div class="flex items-center">
+                        <input type="checkbox" id="remember" name="remember" class="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded">
+                        <label for="remember" class="ml-2 block text-sm text-gray-700">Remember me</label>
+                    </div>
+                    <a href="/password/reset" class="text-sm text-purple-600 hover:text-purple-800">Forgot Password?</a>
+                </div>
+
+                <button type="submit" class="btn-primary text-white font-bold py-3 px-6 rounded-full w-full mb-4">
+                    Login <i class="fas fa-sign-in-alt ml-2"></i>
+                </button>
+
+                <div class="text-center">
+                    <p class="text-gray-600">Don't have an account? <a href="/register" class="text-purple-600 hover:text-purple-800 font-bold">Register here</a></p>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-purple-800 text-white py-8 mt-12">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <h3 class="text-xl font-bold mb-2">Kids Learning Fun</h3>
+                    <p class="text-purple-200">Making learning fun since 2023</p>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-white hover:text-yellow-300 text-xl"><i class="fab fa-facebook"></i></a>
+                    <a href="#" class="text-white hover:text-yellow-300 text-xl"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="text-white hover:text-yellow-300 text-xl"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="border-t border-purple-700 mt-6 pt-6 text-center text-purple-200">
+                <p>&copy; 2023 Kids Learning Fun. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let csrfToken = '';
+
+        // Get CSRF token
+        fetch('/api/csrf-token')
+            .then(response => response.json())
+            .then(data => {
+                csrfToken = data.token;
+                document.querySelector('input[name="_token"]').value = csrfToken;
+            });
+
+        // Check if user is authenticated
+        fetch('/api/check-auth')
+            .then(response => response.json())
+            .then(data => {
+                if (data.authenticated) {
+                    // Update navigation links
+                    document.getElementById('navLinks').innerHTML = `
+                        <li><a href="/" class="nav-btn text-white hover:text-yellow-200 font-bold text-lg">Home</a></li>
+                        <li><a href="/lessons" class="nav-btn text-white hover:text-yellow-200 font-bold text-lg">Lessons</a></li>
+                        <li><a href="/games" class="nav-btn text-white hover:text-yellow-200 font-bold text-lg">Games</a></li>
+                        <li><a href="/dashboard" class="nav-btn text-white hover:text-yellow-200 font-bold text-lg">Dashboard</a></li>
+                        <li>
+                            <form id="logout-form" action="/logout" method="POST" class="inline">
+                                <input type="hidden" name="_token" value="${csrfToken}">
+                                <button type="submit" class="nav-btn text-white hover:text-yellow-200 font-bold text-lg">Logout</button>
+                            </form>
+                        </li>
+                    `;
+                }
+            })
+            .catch(error => console.error('Error checking auth status:', error));
+    </script>
+</body>
+</html> 

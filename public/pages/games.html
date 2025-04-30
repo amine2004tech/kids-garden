@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>Kids Learning Fun - Games</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap');
+        
+        body {
+            font-family: 'Comic Neue', cursive;
+            background-color: #f9f7fe;
+            transition: all 0.3s ease;  
+        }
+        
+        .game-card {
+            perspective: 1000px;
+        }
+        
+        .game-inner {
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+        
+        .game-card:hover .game-inner {
+            transform: rotateY(20deg);
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .btn-primary:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        #gameModal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .game-container {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            max-width: 800px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- Header/Navigation -->
+    <header class="bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 py-4 shadow-lg">
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            <div class="flex items-center">
+                <i class="fas fa-book-open text-white text-3xl mr-3"></i>
+                <h1 class="text-white text-2xl font-bold">Kids Learning Fun</h1>
+            </div>
+            <nav>
+                <ul class="flex space-x-6" id="navLinks">
+                    <li><a href="/" class="nav-btn text-white hover:text-yellow-200 font-bold text-lg">Home</a></li>
+                    <li><a href="/lessons" class="nav-btn text-white hover:text-yellow-200 font-bold text-lg">Lessons</a></li>
+                    <li><a href="/games" class="nav-btn text-white hover:text-yellow-200 font-bold text-lg">Games</a></li>
+                    <li><a href="/login" class="nav-btn text-white hover:text-yellow-200 font-bold text-lg">Login</a></li>
+                    <li><a href="/register" class="nav-btn text-white hover:text-yellow-200 font-bold text-lg">Register</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Games Page Content -->
+    <section class="container mx-auto px-4 py-8">
+        <div class="flex justify-between items-center mb-8">
+            <h2 class="text-3xl font-bold text-purple-800">Learning Games</h2>
+            <a href="/" class="flex items-center text-purple-600 hover:text-purple-800">
+                <i class="fas fa-home mr-2"></i> Back to Home
+            </a>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- Memory Match Game -->
+            <div class="game-card bg-gradient-to-r from-purple-400 to-pink-500 rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition-all cursor-pointer" onclick="startGame('memory')">
+                <div class="h-48 flex items-center justify-center">
+                    <i class="fas fa-brain text-white text-6xl"></i>
+                </div>
+                <div class="bg-white p-6">
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Memory Match</h3>
+                    <p class="text-gray-600 mb-4">Find matching pairs of cards to improve your memory!</p>
+                    <button class="btn-primary text-white font-bold py-2 px-4 rounded-full w-full">
+                        Play Now <i class="fas fa-play ml-2"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Spelling Bee -->
+            <div class="game-card bg-gradient-to-r from-yellow-400 to-orange-500 rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition-all cursor-pointer" onclick="startGame('spelling')">
+                <div class="h-48 flex items-center justify-center">
+                    <i class="fas fa-spell-check text-white text-6xl"></i>
+                </div>
+                <div class="bg-white p-6">
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Spelling Bee</h3>
+                    <p class="text-gray-600 mb-4">Listen to the word and spell it correctly to earn points!</p>
+                    <button class="btn-primary text-white font-bold py-2 px-4 rounded-full w-full">
+                        Play Now <i class="fas fa-play ml-2"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Math Whiz -->
+            <div class="game-card bg-gradient-to-r from-blue-400 to-teal-500 rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition-all cursor-pointer" onclick="startGame('math')">
+                <div class="h-48 flex items-center justify-center">
+                    <i class="fas fa-calculator text-white text-6xl"></i>
+                </div>
+                <div class="bg-white p-6">
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Math Whiz</h3>
+                    <p class="text-gray-600 mb-4">Solve simple math problems as fast as you can!</p>
+                    <button class="btn-primary text-white font-bold py-2 px-4 rounded-full w-full">
+                        Play Now <i class="fas fa-play ml-2"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Animal Sounds -->
+            <div class="game-card bg-gradient-to-r from-green-400 to-emerald-500 rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition-all cursor-pointer" onclick="startGame('animals')">
+                <div class="h-48 flex items-center justify-center">
+                    <i class="fas fa-paw text-white text-6xl"></i>
+                </div>
+                <div class="bg-white p-6">
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Animal Sounds</h3>
+                    <p class="text-gray-600 mb-4">Guess the animal by its sound and learn fun facts!</p>
+                    <button class="btn-primary text-white font-bold py-2 px-4 rounded-full w-full">
+                        Play Now <i class="fas fa-play ml-2"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Game Modal -->
+        <div id="gameModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center">
+            <div class="bg-white rounded-xl p-6 m-4 max-w-4xl w-full max-h-[90vh] overflow-auto">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 id="gameTitle" class="text-2xl font-bold text-purple-800"></h3>
+                    <button onclick="closeGame()" class="text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-times text-2xl"></i>
+                    </button>
+                </div>
+                <div id="gameContent" class="game-container">
+                    <!-- Game content will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-purple-800 text-white py-8 mt-12">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <h3 class="text-xl font-bold mb-2">Kids Learning Fun</h3>
+                    <p class="text-purple-200">Making learning fun since 2023</p>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-white hover:text-yellow-300 text-xl"><i class="fab fa-facebook"></i></a>
+                    <a href="#" class="text-white hover:text-yellow-300 text-xl"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="text-white hover:text-yellow-300 text-xl"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="border-t border-purple-700 mt-6 pt-6 text-center text-purple-200">
+                <p>&copy; 2023 Kids Learning Fun. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let csrfToken = '';
+
+        // Get CSRF token
+        fetch('/api/csrf-token')
+            .then(response => response.json())
+            .then(data => {
+                csrfToken = data.token;
+            });
+
+        // Game functionality
+        function startGame(gameType) {
+            const modal = document.getElementById('gameModal');
+            const title = document.getElementById('gameTitle');
+            const content = document.getElementById('gameContent');
+            
+            // Set the game title
+            const titles = {
+                'memory': 'Memory Match',
+                'spelling': 'Spelling Bee',
+                'math': 'Math Whiz',
+                'animals': 'Animal Sounds'
+            };
+            title.textContent = titles[gameType];
+            
+            // Clear previous content
+            content.innerHTML = '';
+            
+            // Load game content based on type
+            switch(gameType) {
+                case 'memory':
+                    loadMemoryGame();
+                    break;
+                case 'spelling':
+                    loadSpellingGame();
+                    break;
+                case 'math':
+                    loadMathGame();
+                    break;
+                case 'animals':
+                    loadAnimalGame();
+                    break;
+            }
+            
+            // Show modal
+            modal.style.display = 'flex';
+        }
+        
+        function closeGame() {
+            const modal = document.getElementById('gameModal');
+            modal.style.display = 'none';
+        }
+        
+        // Game loaders
+        function loadMemoryGame() {
+            const content = document.getElementById('gameContent');
+            content.innerHTML = `
+                <div class="grid grid-cols-4 gap-4">
+                    <!-- Memory cards will be generated here -->
+                </div>
+                <button onclick="startMemoryGame()" class="mt-4 btn-primary text-white font-bold py-2 px-4 rounded-full">
+                    Start New Game
+                </button>
+            `;
+            // Initialize memory game
+            initializeMemoryGame();
+        }
+        
+        function loadSpellingGame() {
+            const content = document.getElementById('gameContent');
+            content.innerHTML = `
+                <div class="text-center">
+                    <div class="mb-4">
+                        <button onclick="playCurrentWord()" class="btn-primary text-white font-bold py-2 px-4 rounded-full">
+                            <i class="fas fa-volume-up mr-2"></i> Listen to Word
+                        </button>
+                    </div>
+                    <input type="text" id="spellingInput" class="border-2 border-purple-300 rounded-lg px-4 py-2 w-full max-w-md text-center text-xl" placeholder="Type the word here">
+                    <button onclick="checkSpelling()" class="mt-4 btn-primary text-white font-bold py-2 px-4 rounded-full">
+                        Check Answer
+                    </button>
+                </div>
+            `;
+            // Initialize spelling game
+            initializeSpellingGame();
+        }
+        
+        function loadMathGame() {
+            const content = document.getElementById('gameContent');
+            content.innerHTML = `
+                <div class="text-center">
+                    <div id="mathProblem" class="text-3xl font-bold mb-4"></div>
+                    <input type="number" id="mathAnswer" class="border-2 border-purple-300 rounded-lg px-4 py-2 w-full max-w-md text-center text-xl" placeholder="Enter your answer">
+                    <button onclick="checkMathAnswer()" class="mt-4 btn-primary text-white font-bold py-2 px-4 rounded-full">
+                        Submit Answer
+                    </button>
+                </div>
+            `;
+            // Initialize math game
+            initializeMathGame();
+        }
+        
+        function loadAnimalGame() {
+            const content = document.getElementById('gameContent');
+            content.innerHTML = `
+                <div class="text-center">
+                    <div class="mb-4">
+                        <button onclick="playAnimalSound()" class="btn-primary text-white font-bold py-2 px-4 rounded-full">
+                            <i class="fas fa-volume-up mr-2"></i> Play Animal Sound
+                        </button>
+                    </div>
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mt-4">
+                        <!-- Animal choices will be generated here -->
+                    </div>
+                </div>
+            `;
+            // Initialize animal game
+            initializeAnimalGame();
+        }
+
+        // Check if user is authenticated
+        fetch('/api/check-auth')
+            .then(response => response.json())
+            .then(data => {
+                if (data.authenticated) {
+                    // Update navigation links
+                    document.getElementById('navLinks').innerHTML = `
+                        <li><a href="/" class="nav-btn text-white hover:text-yellow-200 font-bold text-lg">Home</a></li>
+                        <li><a href="/lessons" class="nav-btn text-white hover:text-yellow-200 font-bold text-lg">Lessons</a></li>
+                        <li><a href="/games" class="nav-btn text-white hover:text-yellow-200 font-bold text-lg">Games</a></li>
+                        <li><a href="/dashboard" class="nav-btn text-white hover:text-yellow-200 font-bold text-lg">Dashboard</a></li>
+                        ${data.is_admin ? '<li><a href="/admin/content" class="nav-btn text-white hover:text-yellow-200 font-bold text-lg">Manage Content</a></li>' : ''}
+                        <li>
+                            <form id="logout-form" action="/logout" method="POST" class="inline">
+                                <input type="hidden" name="_token" value="${csrfToken}">
+                                <button type="submit" class="nav-btn text-white hover:text-yellow-200 font-bold text-lg">Logout</button>
+                            </form>
+                        </li>
+                    `;
+                }
+            })
+            .catch(error => console.error('Error checking auth status:', error));
+    </script>
+    <script src="/js/audio.js"></script>
+    <script src="/js/games.js"></script>
+</body>
+</html> 

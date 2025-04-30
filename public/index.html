@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kids Learning Fun</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap');
+        
+        body {
+            font-family: 'Comic Neue', cursive;
+            background-color: #f9f7fe;
+            transition: all 0.3s ease;  
+        }
+        
+        .page {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .active-page {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .character {
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .btn-primary {
+            background: linear-gradient(45deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .btn-primary:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .alphabet-card {
+            transition: all 0.3s ease;
+        }
+        
+        .alphabet-card:hover {
+            transform: scale(1.1);
+        }
+        
+        .game-card {
+            perspective: 1000px;
+        }
+        
+        .game-inner {
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+        
+        .game-card:hover .game-inner {
+            transform: rotateY(20deg);
+        }
+        
+        /* Navigation styles */
+        .navbar {
+            background-color: #fff !important;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .navbar-brand, .nav-link {
+            color: #333 !important;
+            font-family: 'Comic Neue', cursive;
+        }
+        
+        .nav-link:hover {
+            color: #ff9a9e !important;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- Header/Navigation -->
+    <header class="bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 py-4 shadow-lg">
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            <div class="flex items-center">
+                <i class="fas fa-book-open text-white text-3xl mr-3"></i>
+                <h1 class="text-white text-2xl font-bold">Kids Learning Fun</h1>
+            </div>
+            <nav>
+                <ul class="flex space-x-6">
+                    <li><button onclick="showPage('home')" class="nav-btn text-white hover:text-yellow-200 font-bold text-lg">Home</button></li>
+                    <li><button onclick="showPage('lessons')" class="nav-btn text-white hover:text-yellow-200 font-bold text-lg">Lessons</button></li>
+                    <li><button onclick="showPage('games')" class="nav-btn text-white hover:text-yellow-200 font-bold text-lg">Games</button></li>
+                    <li><a href="/login" class="nav-btn text-white hover:text-yellow-200 font-bold text-lg">Login</a></li>
+                    <li><a href="/register" class="nav-btn text-white hover:text-yellow-200 font-bold text-lg">Register</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Home Page -->
+    <section id="home" class="page active-page container mx-auto px-4 py-8">
+        <div class="flex flex-col md:flex-row items-center">
+            <div class="md:w-1/2 mb-8 md:mb-0">
+                <h2 class="text-4xl font-bold text-purple-800 mb-4">Welcome to Kids Learning Fun!</h2>
+                <p class="text-xl text-gray-700 mb-6">Where learning is an adventure! Explore our fun lessons and exciting games designed just for you.</p>
+                <div class="flex space-x-4">
+                    <button onclick="showPage('lessons')" class="btn-primary text-white font-bold py-3 px-6 rounded-full shadow-lg">
+                        Start Learning <i class="fas fa-arrow-right ml-2"></i>
+                    </button>
+                    <button onclick="showPage('games')" class="bg-white text-purple-600 font-bold py-3 px-6 rounded-full border-2 border-purple-400 shadow-lg hover:bg-purple-50">
+                        Play Games <i class="fas fa-gamepad ml-2"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="md:w-1/2 flex justify-center">
+                <div class="relative">
+                    <img src="https://cdn.pixabay.com/photo/2017/01/31/17/06/avatar-2026510_960_720.png" alt="Friendly Robot" class="character w-64 h-64">
+                    <div class="absolute -bottom-6 -right-6 bg-yellow-300 rounded-full w-16 h-16 flex items-center justify-center shadow-lg">
+                        <i class="fas fa-lightbulb text-2xl text-yellow-700"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mt-16 bg-white rounded-2xl p-8 shadow-xl">
+            <h3 class="text-2xl font-bold text-center text-purple-700 mb-6">What You'll Learn With Us</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-blue-50 p-6 rounded-xl border-l-4 border-blue-400">
+                    <div class="bg-blue-100 w-12 h-12 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-font text-blue-600 text-xl"></i>
+                    </div>
+                    <h4 class="font-bold text-xl text-blue-800 mb-2">Alphabet & Reading</h4>
+                    <p class="text-gray-700">Learn letters, sounds, and how to read simple words in a fun way!</p>
+                </div>
+                <div class="bg-green-50 p-6 rounded-xl border-l-4 border-green-400">
+                    <div class="bg-green-100 w-12 h-12 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-calculator text-green-600 text-xl"></i>
+                    </div>
+                    <h4 class="font-bold text-xl text-green-800 mb-2">Numbers & Math</h4>
+                    <p class="text-gray-700">Count, add, subtract and explore the world of numbers with games!</p>
+                </div>
+                <div class="bg-purple-50 p-6 rounded-xl border-l-4 border-purple-400">
+                    <div class="bg-purple-100 w-12 h-12 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-globe-americas text-purple-600 text-xl"></i>
+                    </div>
+                    <h4 class="font-bold text-xl text-purple-800 mb-2">World Around Us</h4>
+                    <p class="text-gray-700">Discover animals, plants, and how our world works through stories!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lessons Page -->
+    <section id="lessons" class="page container mx-auto px-4 py-8">
+        <div class="flex justify-between items-center mb-8">
+            <h2 class="text-3xl font-bold text-purple-800">Fun Learning Lessons</h2>
+            <button onclick="showPage('home')" class="flex items-center text-purple-600 hover:text-purple-800">
+                <i class="fas fa-home mr-2"></i> Back to Home
+            </button>
+        </div>
+        
+        <div class="mb-8">
+            <h3 class="text-2xl font-bold text-pink-600 mb-4">Alphabet Adventure</h3>
+            <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-4">
+                <!-- Generate alphabet cards -->
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        const alphabetContainer = document.getElementById('alphabet-container');
+                        const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+                        
+                        alphabet.forEach(letter => {
+                            const card = document.createElement('div');
+                            card.className = 'alphabet-card bg-white rounded-xl p-4 shadow-md flex flex-col items-center cursor-pointer hover:shadow-lg';
+                            card.dataset.letter = letter;
+                            card.onclick = function() { playLetterSound(this.dataset.letter); };
+                            card.innerHTML = `
+                                <div class="w-16 h-16 rounded-full bg-purple-100 flex items-center justify-center mb-2">
+                                    <span class="text-3xl font-bold text-purple-800">${letter}</span>
+                                </div>
+                                <span class="text-sm font-medium text-gray-600">${getAnimalForLetter(letter)}</span>
+                            `;
+                            alphabetContainer.appendChild(card);
+                        });
+                        
+                        function getAnimalForLetter(letter) {
+                            const animals = {
+                                'A': 'Alligator', 'B': 'Bear', 'C': 'Cat', 'D': 'Dog', 
+                                'E': 'Elephant', 'F': 'Fox', 'G': 'Giraffe', 'H': 'Horse',
+                                'I': 'Iguana', 'J': 'Jaguar', 'K': 'Koala', 'L': 'Lion',
+                                'M': 'Monkey', 'N': 'Narwhal', 'O': 'Owl', 'P': 'Penguin',
+                                'Q': 'Quail', 'R': 'Rabbit', 'S': 'Snake', 'T': 'Tiger',
+                                'U': 'Unicorn', 'V': 'Vulture', 'W': 'Whale', 'X': 'X-ray Fish',
+                                'Y': 'Yak', 'Z': 'Zebra'
+                            };
+                            return animals[letter] || '';
+                        }
+                    });
+                </script>
+                <div id="alphabet-container" class="col-span-full grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-4"></div>
+            </div>
+        </div>
+        
+        <div class="mb-8">
+            <h3 class="text-2xl font-bold text-blue-600 mb-4">Number Explorers</h3>
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-10 gap-4">
+                <!-- Generate number cards -->
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        const numbersContainer = document.getElementById('numbers-container');
+                        
+                        for (let i = 1; i <= 20; i++) {
+                            const card = document.createElement('div');
+                            card.className = 'alphabet-card bg-white rounded-xl p-4 shadow-md flex flex-col items-center cursor-pointer hover:shadow-lg';
+                            card.innerHTML = `
+                                <div class="w-16 h-16 rounded-full bg-blue-100 flex items-center justify-center mb-2">
+                                    <span class="text-3xl font-bold text-blue-800">${i}</span>
+                                </div>
+                                <div class="flex space-x-1">
+                                    ${Array(i).fill('<i class="fas fa-star text-yellow-400 text-xs"></i>').join('')}
+                                </div>
+                            `;
+                            numbersContainer.appendChild(card);
+                        }
+                    });
+                </script>
+                <div id="numbers-container" class="col-span-full grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-10 gap-4"></div>
+            </div>
+        </div>
+        
+        <div>
+            <h3 class="text-2xl font-bold text-green-600 mb-4">Color World</h3>
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                <!-- Color cards -->
+                <div class="color-card bg-red-500 rounded-xl p-4 shadow-md flex flex-col items-center cursor-pointer hover:shadow-lg">
+                    <div class="w-16 h-16 rounded-full bg-white flex items-center justify-center mb-2">
+                        <i class="fas fa-apple-alt text-red-500 text-3xl"></i>
+                    </div>
+                    <span class="text-sm font-medium text-white color-name">Red</span>
+                </div>
+                <div class="color-card bg-blue-500 rounded-xl p-4 shadow-md flex flex-col items-center cursor-pointer hover:shadow-lg">
+                    <div class="w-16 h-16 rounded-full bg-white flex items-center justify-center mb-2">
+                        <i class="fas fa-water text-blue-500 text-3xl"></i>
+                    </div>
+                    <span class="text-sm font-medium text-white color-name">Blue</span>
+                </div>
+                <div class="color-card bg-yellow-400 rounded-xl p-4 shadow-md flex flex-col items-center cursor-pointer hover:shadow-lg">
+                    <div class="w-16 h-16 rounded-full bg-white flex items-center justify-center mb-2">
+                        <i class="fas fa-sun text-yellow-400 text-3xl"></i>
+                    </div>
+                    <span class="text-sm font-medium text-gray-800 color-name">Yellow</span>
+                </div>
+                <div class="color-card bg-green-500 rounded-xl p-4 shadow-md flex flex-col items-center cursor-pointer hover:shadow-lg">
+                    <div class="w-16 h-16 rounded-full bg-white flex items-center justify-center mb-2">
+                        <i class="fas fa-leaf text-green-500 text-3xl"></i>
+                    </div>
+                    <span class="text-sm font-medium text-white color-name">Green</span>
+                </div>
+                <div class="color-card bg-purple-500 rounded-xl p-4 shadow-md flex flex-col items-center cursor-pointer hover:shadow-lg">
+                    <div class="w-16 h-16 rounded-full bg-white flex items-center justify-center mb-2">
+                        <i class="fas fa-grapes text-purple-500 text-3xl"></i>
+                    </div>
+                    <span class="text-sm font-medium text-white color-name">Purple</span>
+                </div>
+                <div class="color-card bg-pink-400 rounded-xl p-4 shadow-md flex flex-col items-center cursor-pointer hover:shadow-lg">
+                    <div class="w-16 h-16 rounded-full bg-white flex items-center justify-center mb-2">
+                        <i class="fas fa-heart text-pink-400 text-3xl"></i>
+                    </div>
+                    <span class="text-sm font-medium text-white color-name">Pink</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Games Page -->
+    <section id="games" class="page container mx-auto px-4 py-8">
+        <div class="flex justify-between items-center mb-8">
+            <h2 class="text-3xl font-bold text-purple-800">Learning Games</h2>
+            <button onclick="showPage('home')" class="flex items-center text-purple-600 hover:text-purple-800">
+                <i class="fas fa-home mr-2"></i> Back to Home
+            </button>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- Memory Match Game -->
+            <div class="game-card bg-gradient-to-r from-purple-400 to-pink-500 rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition-all cursor-pointer" onclick="startGame('memory')">
+                <div class="h-48 flex items-center justify-center">
+                    <i class="fas fa-brain text-white text-6xl"></i>
+                </div>
+                <div class="bg-white p-6">
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Memory Match</h3>
+                    <p class="text-gray-600 mb-4">Find matching pairs of cards to improve your memory!</p>
+                    <button class="btn-primary text-white font-bold py-2 px-4 rounded-full w-full">
+                        Play Now <i class="fas fa-play ml-2"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Spelling Bee -->
+            <div class="game-card bg-gradient-to-r from-yellow-400 to-orange-500 rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition-all cursor-pointer" onclick="startGame('spelling')">
+                <div class="h-48 flex items-center justify-center">
+                    <i class="fas fa-spell-check text-white text-6xl"></i>
+                </div>
+                <div class="bg-white p-6">
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Spelling Bee</h3>
+                    <p class="text-gray-600 mb-4">Listen to the word and spell it correctly to earn points!</p>
+                    <button class="btn-primary text-white font-bold py-2 px-4 rounded-full w-full">
+                        Play Now <i class="fas fa-play ml-2"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Math Whiz -->
+            <div class="game-card bg-gradient-to-r from-blue-400 to-teal-500 rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition-all cursor-pointer" onclick="startGame('math')">
+                <div class="h-48 flex items-center justify-center">
+                    <i class="fas fa-calculator text-white text-6xl"></i>
+                </div>
+                <div class="bg-white p-6">
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Math Whiz</h3>
+                    <p class="text-gray-600 mb-4">Solve simple math problems as fast as you can!</p>
+                    <button class="btn-primary text-white font-bold py-2 px-4 rounded-full w-full">
+                        Play Now <i class="fas fa-play ml-2"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Animal Sounds -->
+            <div class="game-card bg-gradient-to-r from-green-400 to-emerald-500 rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition-all cursor-pointer" onclick="startGame('animals')">
+                <div class="h-48 flex items-center justify-center">
+                    <i class="fas fa-paw text-white text-6xl"></i>
+                </div>
+                <div class="bg-white p-6">
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Animal Sounds</h3>
+                    <p class="text-gray-600 mb-4">Guess the animal by its sound and learn fun facts!</p>
+                    <button class="btn-primary text-white font-bold py-2 px-4 rounded-full w-full">
+                        Play Now <i class="fas fa-play ml-2"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Game Modal -->
+        <div id="gameModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center">
+            <div class="bg-white rounded-xl p-6 m-4 max-w-4xl w-full max-h-[90vh] overflow-auto">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 id="gameTitle" class="text-2xl font-bold text-purple-800"></h3>
+                    <button onclick="closeGame()" class="text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-times text-2xl"></i>
+                    </button>
+                </div>
+                <div id="gameContent" class="game-container">
+                    <!-- Game content will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-purple-800 text-white py-8 mt-12">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <h3 class="text-xl font-bold mb-2">Kids Learning Fun</h3>
+                    <p class="text-purple-200">Making learning fun since 2023</p>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-white hover:text-yellow-300 text-xl"><i class="fab fa-facebook"></i></a>
+                    <a href="#" class="text-white hover:text-yellow-300 text-xl"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="text-white hover:text-yellow-300 text-xl"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="border-t border-purple-700 mt-6 pt-6 text-center text-purple-200">
+                <p>&copy; 2023 Kids Learning Fun. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Page navigation
+        function showPage(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active-page');
+            });
+            
+            // Show selected page
+            document.getElementById(pageId).classList.add('active-page');
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+        
+        // Game functionality
+        function startGame(gameType) {
+            const modal = document.getElementById('gameModal');
+            const title = document.getElementById('gameTitle');
+            const content = document.getElementById('gameContent');
+            
+            // Set the game title
+            const titles = {
+                'memory': 'Memory Match',
+                'spelling': 'Spelling Bee',
+                'math': 'Math Whiz',
+                'animals': 'Animal Sounds'
+            };
+            title.textContent = titles[gameType];
+            
+            // Clear previous content
+            content.innerHTML = '';
+            
+            // Load game content based on type
+            switch(gameType) {
+                case 'memory':
+                    loadMemoryGame();
+                    break;
+                case 'spelling':
+                    loadSpellingGame();
+                    break;
+                case 'math':
+                    loadMathGame();
+                    break;
+                case 'animals':
+                    loadAnimalGame();
+                    break;
+            }
+            
+            // Show modal
+            modal.style.display = 'flex';
+        }
+        
+        function closeGame() {
+            const modal = document.getElementById('gameModal');
+            modal.style.display = 'none';
+        }
+        
+        // Game loaders
+        function loadMemoryGame() {
+            const content = document.getElementById('gameContent');
+            content.innerHTML = `
+                <div class="grid grid-cols-4 gap-4">
+                    <!-- Memory cards will be generated here -->
+                </div>
+                <button onclick="startMemoryGame()" class="mt-4 btn-primary text-white font-bold py-2 px-4 rounded-full">
+                    Start New Game
+                </button>
+            `;
+            // Initialize memory game
+            initializeMemoryGame();
+        }
+        
+        function loadSpellingGame() {
+            const content = document.getElementById('gameContent');
+            content.innerHTML = `
+                <div class="text-center">
+                    <div class="mb-4">
+                        <button onclick="playCurrentWord()" class="btn-primary text-white font-bold py-2 px-4 rounded-full">
+                            <i class="fas fa-volume-up mr-2"></i> Listen to Word
+                        </button>
+                    </div>
+                    <input type="text" id="spellingInput" class="border-2 border-purple-300 rounded-lg px-4 py-2 w-full max-w-md text-center text-xl" placeholder="Type the word here">
+                    <button onclick="checkSpelling()" class="mt-4 btn-primary text-white font-bold py-2 px-4 rounded-full">
+                        Check Answer
+                    </button>
+                </div>
+            `;
+            // Initialize spelling game
+            initializeSpellingGame();
+        }
+        
+        function loadMathGame() {
+            const content = document.getElementById('gameContent');
+            content.innerHTML = `
+                <div class="text-center">
+                    <div id="mathProblem" class="text-3xl font-bold mb-4"></div>
+                    <input type="number" id="mathAnswer" class="border-2 border-purple-300 rounded-lg px-4 py-2 w-full max-w-md text-center text-xl" placeholder="Enter your answer">
+                    <button onclick="checkMathAnswer()" class="mt-4 btn-primary text-white font-bold py-2 px-4 rounded-full">
+                        Submit Answer
+                    </button>
+                </div>
+            `;
+            // Initialize math game
+            initializeMathGame();
+        }
+        
+        function loadAnimalGame() {
+            const content = document.getElementById('gameContent');
+            content.innerHTML = `
+                <div class="text-center">
+                    <div class="mb-4">
+                        <button onclick="playAnimalSound()" class="btn-primary text-white font-bold py-2 px-4 rounded-full">
+                            <i class="fas fa-volume-up mr-2"></i> Play Animal Sound
+                        </button>
+                    </div>
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mt-4">
+                        <!-- Animal choices will be generated here -->
+                    </div>
+                </div>
+            `;
+            // Initialize animal game
+            initializeAnimalGame();
+        }
+        
+        // Set home as active page on load
+        document.addEventListener('DOMContentLoaded', function() {
+            showPage('home');
+        });
+    </script>
+    <script src="/js/audio.js"></script>
+    <script src="/js/games.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Audio Test</title>
+</head>
+<body>
+    <h1>Audio Test</h1>
+    <button onclick="playAudio('a')">Play Letter A</button>
+    <button onclick="playAudio('b')">Play Letter B</button>
+    <button onclick="playAudio('c')">Play Letter C</button>
+    
+    <audio id="audioPlayer"></audio>
+
+    <script>
+        function playAudio(letter) {
+            const audioPlayer = document.getElementById('audioPlayer');
+            audioPlayer.src = `/audio/${letter}.mp3`;
+            
+            audioPlayer.oncanplay = () => {
+                console.log('Audio can play');
+                audioPlayer.play();
+            };
+            
+            audioPlayer.onerror = (e) => {
+                console.error('Audio error:', e);
+                console.log('Audio source attempted:', audioPlayer.src);
+            };
+        }
+    </script>
+</body>
+</html> 
